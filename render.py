@@ -1,7 +1,7 @@
-"""Render today's Vestra signature quote to docs/quote.png.
+"""Render today's Vestra signature quote to quote.png (repo root).
 
 Usage:
-  python render.py              # today's quote (Pacific time) -> docs/quote.png
+  python render.py              # today's quote (Pacific time) -> quote.png
   python render.py --all DIR    # render every quote to DIR (for proofing)
 """
 import sys, datetime
@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).parent
-FONTS = ROOT / "fonts"
+FONTS = ROOT                    # fonts live in the repo root
 
 # --- Design (display size in the signature is 520 x 80) -------------------
 SCALE = 2                       # render at 2x for retina screens
@@ -90,6 +90,5 @@ if __name__ == "__main__":
 
     idx, q, today = todays_quote(quotes)
     img, fits = render(q)
-    (ROOT / "docs").mkdir(exist_ok=True)
-    img.save(ROOT / "docs" / "quote.png", optimize=True)
+    img.save(ROOT / "quote.png", optimize=True)
     print(f"{today}: quote #{idx + 1} of {len(quotes)}: {q}" + ("" if fits else "  [WARNING: too long]"))
